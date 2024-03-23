@@ -93,7 +93,7 @@ public class PasswordStore {
     public String toString(){
         return "Username : " + this.username +
                 "\nPassword : " + this.password +
-                "\nHashKey : " + this.getCategory() +
+                "\nCategory : " + this.getCategory() +
                 "\nScore : " + this.score;
     }
 }
