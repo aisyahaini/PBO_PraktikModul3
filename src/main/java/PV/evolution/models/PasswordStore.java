@@ -6,7 +6,6 @@ Intellij IDEA*/
 package PV.evolution.models;
 
 import PV.evolution.util.Encryptor;
-
 import java.security.NoSuchAlgorithmException;
 
 public class PasswordStore {
@@ -45,21 +44,22 @@ public class PasswordStore {
     }
 
     public void setPassword(String plainPass){
-        try {
-            this.hashKey = Encryptor.encrypt(plainPass, hashKey);
-        } catch (Exception e) {
+        try{
+            this.password = Encryptor.encrypt(plainPass, hashKey);
+        } catch (Exception e){
             System.out.println("Error!!" + e.getMessage());
         }
-        calculateStore(plainPass);
+        calculateScore(plainPass);
+
     }
 
-    public String getPassword() {
-        try {
-            return "Password Encrypted";
-        } catch (Exception e) {
-            System.out.println("Error!! " + e.getMessage());
+    public String getPassword(){
+        try{
+            return Encryptor.decrypt(this.password, hashKey);
+        } catch (Exception e){
+            System.out.println("Error!!" + e.getMessage());
         }
-        return null;
+        return "";
     }
 
     public void setCategory(int category){
@@ -81,11 +81,11 @@ public class PasswordStore {
         return "Belum Terkategori";
     }
 
-    private void calculateStore(String plainPass){
+    private void calculateScore(String plainPass){
         if(plainPass.length() > 15){
             score = 10;
         } else {
-            score = (plainPass.length() / 15.0) * 10.0;
+            score = (plainPass.length()/15.0) * 10.0;
         }
     }
 
@@ -97,3 +97,4 @@ public class PasswordStore {
                 "\nScore : " + this.score;
     }
 }
+
